@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+   <head>
+       <!--Import materialize.css-->
+       <link rel= "stylesheet" type= "text/css" href="{{ url_for('static', filename='stylesheets/bootstrap.css') }}" />
+       <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+      
+       
+       <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+      <title>Av Hub - Issue Tracker</title>
+   </head>	
+   
+   
+   
+    <body style="background-color: dimgray;">
+   
+   
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">AV Hub</a>
+            </div>
+                <ul class="nav navbar-nav">
+                <li class="active"><a href="/home">Home</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sm" style = "border:1px solid black">
+                
+                <!-- create issue form-->
+                <form style="background-color: whitesmoke; border:15px solid whitesmoke">
+                    <p style="font-size: 200%;">Create Issue</p>
+                    <div class="form-group">
+                        <label for="issueName">Name of issue</label>
+                        <input type="text" class="form-control" id="issueName" placeholder="Name">
+                        <small id="issueNameHelp" class="form-text text-muted">Enter something to identify the issue.</small>
+                    </div>
+                    <div class="form-group">
+                            <label for="issueDescription">Description of issue</label>
+                            <input type="text" class="form-control" id="issueDescription" placeholder="Description">
+                            <small id="issueDescriptionHelp" class="form-text text-muted">Enter a breif description of the issue.</small>  
+                    </div>
+                    <div class="form-group">
+                            <label for="assignee">Description of issue</label>
+                            <input type="text" class="form-control" id="issueAssignee" placeholder="Jotaro Kujo">
+                            <small id="issueAssigneeHelp" class="form-text text-muted">Who will be working on this issue?</small>
+                            
+                    </div>
+                        <button type="submit" class="btn btn-primary">Create issue</button>
+                </form>
+
+
+
+            </div>
+        </div>
+    </div>
+        
+    </body>	
+</html>
