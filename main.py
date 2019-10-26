@@ -1,11 +1,10 @@
 from flask import Flask,render_template,request, redirect, url_for, request
-import sys
-
+import sys,datetime,json
 app = Flask(__name__)
 
 loggedIn = False
 
-
+openIssues = []
 
 @app.route("/")
 def index():
@@ -41,11 +40,13 @@ def home():
         return render_template("home.html")
     else:
         return render_template("not-logged-in.html")
+
 @app.route("/login",methods=['GET','POST'])
 def login():
     
     error = None
     if request.method == 'POST':
+        
         if request.form['user'] != 'admin' or request.form["password"] != "admin":
             error = 'Invalid Credentials. Please try again.'
             print("user: ",request.form.get('user'))
@@ -56,16 +57,43 @@ def login():
             loggedIn = True
             return redirect(url_for('home'))
     return render_template('login.html', error=error)
-    
-    
-    return render_template("login.html")
 
 
-@app.route("/issue-tracker")
+@app.route("/issue-tracker",methods=['GET','POST'])
 def issueTracker():
     if loggedIn:
+
         return render_template("issue-tracker.html")    
     else:
         return render_template("not-logged-in.html")
+
+
+@app.route("/add-issue/",methods=['GET','POST'])#get well, gets and post sends
+def addIssue():
+    
+    issueName = request.form.get("issueName")
+    issueDescription = request.form.get("issueDescription")
+    assignee = request.form.get("assignee")
+    print(issueName,issueDescription,assignee)
+
+
+
+    if issueName == "" or issueDescription == "" or assignee == "":
+        
+        return render_template("issue-tracker.html",errorMessage = "Error: Not all values submitted!")
+    date_object = datetime.date.today()
+    try:
+        issueFormat = "Name: "+ issueName + "----" + "Description: " + issueDescription +"----"+ "Assigned To: " + assignee +"----Date: " +str(date_object)
+    except:
+        pass
+
+    openIssues.append(issueFormat)
+    print(openIssues)
+    return render_template("issue-tracker.html",issueList=openIssues)
+
+
+
+
+
 if __name__ == "__main__":
     app.run(debug=True)
