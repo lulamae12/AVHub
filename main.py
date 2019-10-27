@@ -5,6 +5,7 @@ app = Flask(__name__)
 loggedIn = False
 
 openIssues = []
+closedIssues = []
 
 @app.route("/")
 def index():
@@ -83,7 +84,7 @@ def addIssue():
         return render_template("issue-tracker.html",errorMessage = "Error: Not all values submitted!")
     date_object = datetime.date.today()
     try:
-        issueFormat = "Name: "+ issueName + "----" + "Description: " + issueDescription +"----"+ "Assigned To: " + assignee +"----Date: " +str(date_object)
+        issueFormat = "Name: "+ issueName + "\n" + "Description: " + issueDescription +"\n"+ "Assigned To: " + assignee + "\n"+ "Date: " +str(date_object)
     except:
         pass
 

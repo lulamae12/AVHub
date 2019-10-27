@@ -77,8 +77,8 @@
 
                 <ul class="list-group"> 
                     {% for issue in issueList  %}
-        
-                        <button type="button" class="list-group-item list-group-item-action">{{issue}}<span class="badge badge-primary badge-pill" style="background-color: red;">OPEN</span></button>
+                        </a>
+                        <button type="button" class="list-group-item list-group-item-action" style="white-space: pre-line;">{{issue}}<span class="badge badge-primary badge-pill" style="background-color: red;">OPEN</span></button>
                         <p> </p>
                     {% endfor %}
                 </ul>
@@ -88,6 +88,16 @@
             <h1 style="color: white;">Closed Issues</h1>
             <hr>
 
+            <div>
+
+                <ul class="list-group"> 
+                    {% for issue in issueList  %}
+                        </a>
+                        <button type="button" class="list-group-item list-group-item-action" style="background-color: darkgrey; white-space: pre-line;">{{issue}}<span class="badge badge-primary badge-pill" style="background-color: green;">CLOSED</span></button>
+                        <p> </p>
+                    {% endfor %}
+                </ul>
+            </div>
                     
 
         </div>
