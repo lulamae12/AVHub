@@ -60,39 +60,43 @@ def login():
     return render_template('login.html', error=error)
 
 
-@app.route("/issue-tracker",methods=['GET','POST'])
-def issueTracker():
-    if loggedIn:
+
+
+
+@app.route("/issue-tracker",methods=['GET','POST'])#get well, gets and post sends
+def addOrRemoveIssue():
+    def updatePage():
+        print("RAN UPDATE")
         
-        return render_template("issue-tracker.html",issueList=openIssues)    
+        return render_template("issue-tracker.html",issueList=openIssues)
+
+    def addIssue():
+        print("test2")
+        issueName = request.form.get("issueName")
+        issueDescription = request.form.get("issueDescription")
+        assignee = request.form.get("assignee")
+        print(issueName,issueDescription,assignee)
+
+
+
+        if issueName == "" or issueDescription == "" or assignee == "":
+            
+            return render_template("issue-tracker.html",errorMessage = "Error: Not all values submitted!")
+        date_object = datetime.date.today()
+        try:
+            issueFormat = "Name: "+ issueName + "\n" + "Description: " + issueDescription +"\n"+ "Assigned To: " + assignee + "\n"+ "Date Created: " +str(date_object)
+        except:
+            pass
+
+        openIssues.append(issueFormat)
+        print(openIssues)
+        return render_template("issue-tracker.html",issueList=openIssues)
+
+    if request.method == "POST":
+        if request.form["create-issue"] == "add":
+            return addIssue()
     else:
-        return render_template("not-logged-in.html")
-
-
-@app.route("/issue-tracker/",methods=['GET','POST'])#get well, gets and post sends
-def addIssue():
-    
-    issueName = request.form.get("issueName")
-    issueDescription = request.form.get("issueDescription")
-    assignee = request.form.get("assignee")
-    print(issueName,issueDescription,assignee)
-
-
-
-    if issueName == "" or issueDescription == "" or assignee == "":
-        
-        return render_template("issue-tracker.html",errorMessage = "Error: Not all values submitted!")
-    date_object = datetime.date.today()
-    try:
-        issueFormat = "Name: "+ issueName + "\n" + "Description: " + issueDescription +"\n"+ "Assigned To: " + assignee + "\n"+ "Date Created: " +str(date_object)
-    except:
-        pass
-
-    openIssues.append(issueFormat)
-    print(openIssues)
-    return render_template("issue-tracker.html",issueList=openIssues)
-
-
+        return updatePage()
 
 if __name__ == "__main__":
     app.run(debug=True)

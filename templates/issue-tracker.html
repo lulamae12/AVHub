@@ -44,7 +44,7 @@
             <div class="col-sm" style = "border:1px solid black">
                 
                 <!-- create issue form-->
-                <form style="background-color: whitesmoke; border:15px solid whitesmoke" method="POST" action="/issue-tracker/">
+                <form style="background-color: whitesmoke; border:15px solid whitesmoke" method="POST" action="/issue-tracker">
                     <p style="font-size: 200%;">Create Issue</p>
                     <p style="color: red;">{{errorMessage}}</p>
                     <div class="form-group">
@@ -64,7 +64,7 @@
                             
                     </div>
                        
-                        <button id=submit type="submit" class="btn btn-primary" value="/issue-tracker/">Create issue</button>
+                        <button id=submit name="create-issue" type="submit" class="btn btn-primary" value="add">Create issue</button>
 
                         
                         
