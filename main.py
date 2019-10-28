@@ -75,7 +75,7 @@ def addOrRemoveIssue():
         issueName = request.form.get("issueName")
         issueDescription = request.form.get("issueDescription")
         assignee = request.form.get("assignee")
-        print(issueName,issueDescription,assignee)
+        #print(issueName,issueDescription,assignee)
 
 
 
@@ -91,10 +91,31 @@ def addOrRemoveIssue():
         openIssues.append(issueFormat)
         print(openIssues)
         return render_template("issue-tracker.html",issueList=openIssues)
+    def closeIssue():
+        
+        currentIssue = request.form.get("issueVal")
 
+        print(str(currentIssue))
+
+        print("issueClosed")
+        return render_template("issue-tracker.html",issueList=openIssues,closeIssueList = closedIssues)
+        
+
+
+    print(request.method)
     if request.method == "POST":
-        if request.form["create-issue"] == "add":
+        createIssueButton = request.form.get("create-issue")
+        closeIssueButton = request.form.get("close-issue-button")    
+        
+        
+        if createIssueButton == "add":
             return addIssue()
+    
+
+    
+        elif closeIssueButton == "close-issue":
+            return closeIssue()
+
     else:
         return updatePage()
 
