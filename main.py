@@ -89,11 +89,11 @@ def addOrRemoveIssue():
             pass
 
         openIssues.append(issueFormat)
-        print(openIssues)
+        #print(openIssues)
         return render_template("issue-tracker.html",issueList=openIssues)
     def closeIssue():
         
-        currentIssue = request.form.get("issueVal")
+        currentIssue = request.form.get("openIssueListItem")
 
         print(str(currentIssue))
 
