@@ -94,9 +94,33 @@ def addOrRemoveIssue():
     def closeIssue():
         
         currentIssue = request.form.get("openIssueListItem")
+        
+        currentIssue = currentIssue.encode("ascii").decode("utf-8")
+        currentIssue = currentIssue.replace("\r","")
+        currentIssueLis = []
+        
+        currentIssueLis.append(currentIssue)
 
-        print(str(currentIssue))
+        print(currentIssueLis)
+       
 
+
+
+
+
+        if currentIssue in openIssues:
+            #print("IN OPEN ISSUES")
+            spotInList = openIssues.index(currentIssue)
+            #print("spot in list: ",spotInList)
+            openIssues.remove(currentIssue)
+
+       
+        print("\n")
+        print("CURRENT ISSUES:",openIssues)
+        print("CLOSED ISSUES:",closedIssues)
+        print("\n")
+      
+        
         print("issueClosed")
         return render_template("issue-tracker.html",issueList=openIssues,closeIssueList = closedIssues)
         
