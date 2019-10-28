@@ -63,13 +63,13 @@ def login():
 @app.route("/issue-tracker",methods=['GET','POST'])
 def issueTracker():
     if loggedIn:
-
-        return render_template("issue-tracker.html")    
+        
+        return render_template("issue-tracker.html",issueList=openIssues)    
     else:
         return render_template("not-logged-in.html")
 
 
-@app.route("/add-issue/",methods=['GET','POST'])#get well, gets and post sends
+@app.route("/issue-tracker/",methods=['GET','POST'])#get well, gets and post sends
 def addIssue():
     
     issueName = request.form.get("issueName")
@@ -84,15 +84,13 @@ def addIssue():
         return render_template("issue-tracker.html",errorMessage = "Error: Not all values submitted!")
     date_object = datetime.date.today()
     try:
-        issueFormat = "Name: "+ issueName + "\n" + "Description: " + issueDescription +"\n"+ "Assigned To: " + assignee + "\n"+ "Date: " +str(date_object)
+        issueFormat = "Name: "+ issueName + "\n" + "Description: " + issueDescription +"\n"+ "Assigned To: " + assignee + "\n"+ "Date Created: " +str(date_object)
     except:
         pass
 
     openIssues.append(issueFormat)
     print(openIssues)
     return render_template("issue-tracker.html",issueList=openIssues)
-
-
 
 
 

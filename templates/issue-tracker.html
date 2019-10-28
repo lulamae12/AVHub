@@ -44,7 +44,7 @@
             <div class="col-sm" style = "border:1px solid black">
                 
                 <!-- create issue form-->
-                <form style="background-color: whitesmoke; border:15px solid whitesmoke" method="POST" action="/add-issue/">
+                <form style="background-color: whitesmoke; border:15px solid whitesmoke" method="POST" action="/issue-tracker/">
                     <p style="font-size: 200%;">Create Issue</p>
                     <p style="color: red;">{{errorMessage}}</p>
                     <div class="form-group">
@@ -64,7 +64,7 @@
                             
                     </div>
                        
-                        <button id=submit type="submit" class="btn btn-primary" value="/add-issue/">Create issue</button>
+                        <button id=submit type="submit" class="btn btn-primary" value="/issue-tracker/">Create issue</button>
 
                         
                         
@@ -77,9 +77,14 @@
 
                 <ul class="list-group"> 
                     {% for issue in issueList  %}
-                        </a>
-                        <button type="button" class="list-group-item list-group-item-action" style="white-space: pre-line;">{{issue}}<span class="badge badge-primary badge-pill" style="background-color: red;">OPEN</span></button>
-                        <p> </p>
+                        <form action="/add-issue/" method="GET">
+                           
+                            <li class="list-group-item list-group-item-action" style="white-space: pre-line;">{{issue}}<span class="badge badge-primary badge-pill" style="background-color: red;">OPEN</span></li>
+                            <button type="button" class="btn btn-primary">Primary</button>
+                            
+                            <p></p>
+
+                        </form>
                     {% endfor %}
                 </ul>
             </div>
@@ -93,7 +98,7 @@
                 <ul class="list-group"> 
                     {% for issue in issueList  %}
                         </a>
-                        <button type="button" class="list-group-item list-group-item-action" style="background-color: darkgrey; white-space: pre-line;">{{issue}}<span class="badge badge-primary badge-pill" style="background-color: green;">CLOSED</span></button>
+                        <button type="submit" class="list-group-item list-group-item-action" style="background-color: darkgrey; white-space: pre-line;">{{issue}}<span class="badge badge-primary badge-pill" style="background-color: green;">CLOSED</span></button>
                         <p> </p>
                     {% endfor %}
                 </ul>
