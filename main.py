@@ -68,7 +68,7 @@ def addOrRemoveIssue():
     def updatePage():
         print("RAN UPDATE")
         
-        return render_template("issue-tracker.html",issueList=openIssues)
+        return render_template("issue-tracker.html",issueList=openIssues,closeIssueList=closedIssues)
 
     def addIssue():
         print("test2")
@@ -77,6 +77,7 @@ def addOrRemoveIssue():
         assignee = request.form.get("assignee")
         #print(issueName,issueDescription,assignee)
 
+        openIssueFiles = open("openIssues.txt","a+")
 
 
         if issueName == "" or issueDescription == "" or assignee == "":
@@ -87,8 +88,11 @@ def addOrRemoveIssue():
             issueFormat = "Name: "+ issueName + "\n" + "Description: " + issueDescription +"\n"+ "Assigned To: " + assignee + "\n"+ "Date Created: " +str(date_object)
         except:
             pass
-
+        print("o")
         openIssues.append(issueFormat)
+        openIssueFiles.write(issueFormat)
+
+
         #print(openIssues)
         return render_template("issue-tracker.html",issueList=openIssues,closeIssueList=closedIssues)
     def closeIssue():
@@ -99,6 +103,17 @@ def addOrRemoveIssue():
         currentIssue = currentIssue.replace("\r","")
         currentIssueLis = []
         
+
+        splitLis = currentIssue.split()
+
+        print(splitLis[len(splitLis) - 1])
+        print(splitLis[len(splitLis) - 2])
+        
+        
+
+        
+
+        print(splitLis)
         currentIssueLis.append(currentIssue)
 
         print(currentIssueLis)
