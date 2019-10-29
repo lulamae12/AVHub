@@ -1,16 +1,60 @@
-from flask import Flask,render_template,request, redirect, url_for, request
+from flask import Flask,render_template,request, session, Blueprint, redirect, url_for, request
 import sys,datetime,json
+import flask_login
+
+users = {'tommy': {'password': 'pass'},'mack':{'password':'word'}}
+
+
 app = Flask(__name__)
+app.secret_key = "secretKey"
+
+login_manager = flask_login.LoginManager()
+
+login_manager.init_app(app)
+
+class User(flask_login.UserMixin):
+    pass
+
+
+@login_manager.user_loader
+def user_loader(email):
+    if email not in users:
+        return
+
+    user = User()
+    user.id = email
+    return user
+
+
+@login_manager.request_loader
+def request_loader(request):
+    email = request.form.get('email')
+    if email not in users:
+        return
+
+    user = User()
+    user.id = email
+
+    # DO NOT ever store passwords in plaintext and always compare password
+    # hashes using constant-time comparison!
+    user.is_authenticated = request.form['password'] == users[email]['password']
+
+    return user
+
+
+
 
 loggedIn = False
 
 openIssues = []
 closedIssues = []
 
+
 @app.route("/")
 def index():
     if loggedIn:
-        return "you are at the index"
+        print("not Logged in")
+        return render_template('not-logged-in.html')
     else:
         return render_template("not-logged-in.html")
         
@@ -46,24 +90,34 @@ def home():
 def login():
     
     error = None
-    if request.method == 'POST':
-        
-        if request.form['user'] != 'admin' or request.form["password"] != "admin":
-            error = 'Invalid Credentials. Please try again.'
-            print("user: ",request.form.get('user'))
-            print("password: ",request.form.get('password'))
-            print("error")
-        else:
-            global loggedIn
-            loggedIn = True
-            return redirect(url_for('home'))
+    if request.method == 'GET':
+        return render_template('login.html')
+    
+    email = request.form['user']
+    if request.form["password"] == users[email]["password"]:
+        user = User()
+        user.id = email
+        flask_login.login_user(user)
+        return redirect(url_for('protected')) 
+    
+    
+    
     return render_template('login.html', error=error)
 
 
+@app.route('/protected')
+@flask_login.login_required
+def protected():
+    return 'Logged in as: ' + flask_login.current_user.id
 
+@app.route('/logout')
+def logout():
+    flask_login.logout_user()
+    return 'Logged out'
 
 
 @app.route("/issue-tracker",methods=['GET','POST'])#get well, gets and post sends
+@flask_login.login_required
 def addOrRemoveIssue():
     def updatePage():
         print("RAN UPDATE")
