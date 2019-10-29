@@ -90,7 +90,7 @@ def addOrRemoveIssue():
 
         openIssues.append(issueFormat)
         #print(openIssues)
-        return render_template("issue-tracker.html",issueList=openIssues)
+        return render_template("issue-tracker.html",issueList=openIssues,closeIssueList=closedIssues)
     def closeIssue():
         
         currentIssue = request.form.get("openIssueListItem")
@@ -109,11 +109,11 @@ def addOrRemoveIssue():
 
 
         if currentIssue in openIssues:
-            #print("IN OPEN ISSUES")
+            print("IN OPEN ISSUES")
             spotInList = openIssues.index(currentIssue)
-            #print("spot in list: ",spotInList)
+            print("spot in list: ",spotInList)
             openIssues.remove(currentIssue)
-
+            closedIssues.append(currentIssue)
        
         print("\n")
         print("CURRENT ISSUES:",openIssues)

@@ -97,9 +97,10 @@
             <div>
 
                 <ul class="list-group"> 
-                    {% for issue in issueList  %}
+                    {% for issue in closeIssueList  %}
+                        
                         </a>
-                        <button type="submit" class="list-group-item list-group-item-action" style="background-color: darkgrey; white-space: pre-line;">{{issue}}<span class="badge badge-primary badge-pill" style="background-color: green;">CLOSED</span></button>
+                        <li class="list-group-item list-group-item-action" style="background-color: darkgrey; white-space: pre-line;">{{issue}}<span class="badge badge-primary badge-pill" style="background-color: green;">CLOSED</span></li>
                         <p> </p>
                     {% endfor %}
                 </ul>
