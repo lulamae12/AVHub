@@ -1,45 +1,12 @@
 from flask import Flask,render_template,request, session, Blueprint, redirect, url_for, request
 import sys,datetime,json
 import flask_login
+from termcolor import colored
 
-users = {'tommy': {'password': 'pass'},'mack':{'password':'word'}}
+
 
 
 app = Flask(__name__)
-app.secret_key = "secretKey"
-
-login_manager = flask_login.LoginManager()
-
-login_manager.init_app(app)
-
-class User(flask_login.UserMixin):
-    pass
-
-
-@login_manager.user_loader
-def user_loader(email):
-    if email not in users:
-        return
-
-    user = User()
-    user.id = email
-    return user
-
-
-@login_manager.request_loader
-def request_loader(request):
-    email = request.form.get('email')
-    if email not in users:
-        return
-
-    user = User()
-    user.id = email
-
-    # DO NOT ever store passwords in plaintext and always compare password
-    # hashes using constant-time comparison!
-    user.is_authenticated = request.form['password'] == users[email]['password']
-
-    return user
 
 
 
@@ -52,72 +19,38 @@ closedIssues = []
 
 @app.route("/")
 def index():
-    if loggedIn:
-        print("not Logged in")
-        return render_template('not-logged-in.html')
-    else:
-        return render_template("not-logged-in.html")
+    return render_template("home.html")
         
 
 @app.route("/about")
 def about():
-    if loggedIn:
-        if request.method == "POST":
-            print(request.form)
-            print('hi')
-        return render_template("about.html")
-    else:
-        return render_template("not-logged-in.html")
+
+    if request.method == "POST":
+        print(request.form)
+        print('hi')
+    return render_template("about.html")
+    
 
 @app.route("/aboutButton")
 def test():
-    if loggedIn:
-        print("hello")
+    
+    print("hello")
     
     
-        return render_template("about.html")
-    else:
-        return render_template("not-logged-in.html")
+    return render_template("about.html")
 
 @app.route("/home")
 def home():
-    if loggedIn:
-        return render_template("home.html")
-    else:
-        return render_template("not-logged-in.html")
-
-@app.route("/login",methods=['GET','POST'])
-def login():
     
-    error = None
-    if request.method == 'GET':
-        return render_template('login.html')
-    
-    email = request.form['user']
-    if request.form["password"] == users[email]["password"]:
-        user = User()
-        user.id = email
-        flask_login.login_user(user)
-        return redirect(url_for('protected')) 
-    
-    
-    
-    return render_template('login.html', error=error)
+    return render_template("home.html")
 
 
-@app.route('/protected')
-@flask_login.login_required
-def protected():
-    return 'Logged in as: ' + flask_login.current_user.id
 
-@app.route('/logout')
-def logout():
-    flask_login.logout_user()
-    return 'Logged out'
+
 
 
 @app.route("/issue-tracker",methods=['GET','POST'])#get well, gets and post sends
-@flask_login.login_required
+
 def addOrRemoveIssue():
     def updatePage():
         print("RAN UPDATE")
@@ -129,6 +62,9 @@ def addOrRemoveIssue():
         issueName = request.form.get("issueName")
         issueDescription = request.form.get("issueDescription")
         assignee = request.form.get("assignee")
+        creator = request.form.get("creator")
+        severityButton = request.form.get("exampleRadios")
+
         #print(issueName,issueDescription,assignee)
 
         openIssueFiles = open("openIssues.txt","a+")
@@ -139,7 +75,7 @@ def addOrRemoveIssue():
             return render_template("issue-tracker.html",errorMessage = "Error: Not all values submitted!")
         date_object = datetime.date.today()
         try:
-            issueFormat = "Name: "+ issueName + "\n" + "Description: " + issueDescription +"\n"+ "Assigned To: " + assignee + "\n"+ "Date Created: " +str(date_object)
+            issueFormat = "Issue Severity Level: " + severityButton + "\n" + "Name: "+ issueName + "\n" + "Description:" + issueDescription +"\n"+ "Assigned To: " + assignee + "\n"+ "Date Created: " +str(date_object) + "\n\n" + "This issue was logged by: " + creator
         except:
             pass
         print("o")
