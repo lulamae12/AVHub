@@ -2,12 +2,17 @@ from flask import Flask,render_template,request, session, Blueprint, redirect, u
 import sys,datetime,json
 import flask_login
 from termcolor import colored
-
+from flask_basicauth import BasicAuth
+from werkzeug.security import generate_password_hash, check_password_hash
 
 
 
 app = Flask(__name__)
+app.config['BASIC_AUTH_FORCE'] = True
+app.config['BASIC_AUTH_USERNAME'] = 'avhub'
+app.config['BASIC_AUTH_PASSWORD'] = 'barbarossa'
 
+basic_auth = BasicAuth(app)
 
 
 
@@ -15,6 +20,12 @@ loggedIn = False
 
 openIssues = []
 closedIssues = []
+
+@app.route("/authtest")
+
+def secretVeiw():
+    return render_template("issue-tracker.html")
+
 
 
 @app.route("/")
@@ -54,7 +65,26 @@ def home():
 def addOrRemoveIssue():
     def updatePage():
         print("RAN UPDATE")
-        
+        openIssueFile =  open("currentIssues.txt","r")
+
+        for line in openIssueFile.readlines():
+            
+            # issueFormat = "Issue Severity Level: " + severityButton + "\n" + "Name: "+ issueName + "\n" + "Description:" + issueDescription +"\n"+ "Assigned To: " + assignee + "\n"+ "Date Created: " +str(date_object) + "\n\n" + "This issue was logged by: " + creator
+            line = line.replace("'","\"")
+            issueData = json.loads(line)
+            severityButton = issueData["IssueSeverityLevel"]
+            issueName = issueData["Name"]
+            issueDescription = issueData["Description"]
+            assignee = issueData["AssignedTo"]
+            date = issueData["DateCreated"]
+            creator = issueData["Creator"]
+
+
+            issueFormat = "Issue Severity Level: " + severityButton + "\n" + "Name: "+ issueName + "\n" + "Description:" + issueDescription +"\n"+ "Assigned To: " + assignee + "\n"+ "Date Created: " +date + "\n\n" + "This issue was logged by: " + creator
+            
+            if issueFormat not in openIssues:
+
+                openIssues.append(issueFormat)
         return render_template("issue-tracker.html",issueList=openIssues,closeIssueList=closedIssues)
 
     def addIssue():
@@ -67,21 +97,69 @@ def addOrRemoveIssue():
 
         #print(issueName,issueDescription,assignee)
 
-        openIssueFiles = open("openIssues.txt","a+")
+        
+
 
 
         if issueName == "" or issueDescription == "" or assignee == "":
-            
+          
             return render_template("issue-tracker.html",errorMessage = "Error: Not all values submitted!")
         date_object = datetime.date.today()
         try:
             issueFormat = "Issue Severity Level: " + severityButton + "\n" + "Name: "+ issueName + "\n" + "Description:" + issueDescription +"\n"+ "Assigned To: " + assignee + "\n"+ "Date Created: " +str(date_object) + "\n\n" + "This issue was logged by: " + creator
         except:
             pass
-        print("o")
-        openIssues.append(issueFormat)
-        openIssueFiles.write(issueFormat)
+        
+        jsonDataToWrite = {
+                    "IssueSeverityLevel":severityButton,
+                    "Name":issueName,
+                    "Description":issueDescription,
+                    "AssignedTo":assignee,
+                    "DateCreated":str(date_object),
+                    "Creator":creator
+                    }
+        openIssueFile =  open("currentIssues.txt","a+")
+    
 
+        openIssueFile.write(str(jsonDataToWrite))
+        openIssueFile.write("\n")
+        openIssueFile.close()
+
+        openIssueFile =  open("currentIssues.txt","r")
+
+        for line in openIssueFile.readlines():
+            
+            # issueFormat = "Issue Severity Level: " + severityButton + "\n" + "Name: "+ issueName + "\n" + "Description:" + issueDescription +"\n"+ "Assigned To: " + assignee + "\n"+ "Date Created: " +str(date_object) + "\n\n" + "This issue was logged by: " + creator
+            line = line.replace("'","\"")
+            issueData = json.loads(line)
+            severityButton = issueData["IssueSeverityLevel"]
+            issueName = issueData["Name"]
+            issueDescription = issueData["Description"]
+            assignee = issueData["AssignedTo"]
+            date = issueData["DateCreated"]
+            creator = issueData["Creator"]
+
+
+            issueFormat = "Issue Severity Level: " + severityButton + "\n" + "Name: "+ issueName + "\n" + "Description:" + issueDescription +"\n"+ "Assigned To: " + assignee + "\n"+ "Date Created: " +date + "\n\n" + "This issue was logged by: " + creator
+            
+
+
+
+
+
+
+            if issueFormat not in openIssues:
+
+                openIssues.append(issueFormat)
+            
+
+
+
+        print("o")
+        
+        
+
+        
 
         #print(openIssues)
         return render_template("issue-tracker.html",issueList=openIssues,closeIssueList=closedIssues)
@@ -108,7 +186,7 @@ def addOrRemoveIssue():
 
         print(currentIssueLis)
        
-
+        
 
 
 
@@ -125,6 +203,16 @@ def addOrRemoveIssue():
         print("CLOSED ISSUES:",closedIssues)
         print("\n")
       
+        closedIssuesFile = open("closedIssues.txt","a+")
+        for item in range(len(closedIssues)):
+            closedIssuesFile.write(closedIssues[item])
+        
+        
+        
+
+
+
+
         
         print("issueClosed")
         return render_template("issue-tracker.html",issueList=openIssues,closeIssueList = closedIssues)

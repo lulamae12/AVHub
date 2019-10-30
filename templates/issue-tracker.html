@@ -23,7 +23,7 @@
    
    
    
-    <body style="background-color: dimgray;">
+    <body style="background-color:  #0e1010;">
    
    
     <nav class="navbar navbar-inverse">
@@ -44,18 +44,18 @@
             <div class="col-sm" style = "border:1px solid black">
                 
                 <!-- create issue form-->
-                <form style="background-color: whitesmoke; border:15px solid whitesmoke" method="POST" action="/issue-tracker">
-                    <p style="font-size: 200%;">Create Issue</p>
-                    <p style="color: red;">{{errorMessage}}</p>
+                <form style="background-color: dimgray; border:15px solid dimgray" method="POST" action="/issue-tracker">
+                    <p style="font-size: 200%; color: black;">Create Issue</p>
+                    <p style="color:red;">{{errorMessage}}</p>
                     <div class="form-group">
-                        <label for="issueName">Name of issue</label>
+                        <label for="issueName" style="color: black;">Name of issue</label>
                         <input type="text" name="issueName" class="form-control" id="issueName" placeholder="Name" value="{{request.form.issueName}}">
-                        <small id="issueNameHelp" class="form-text text-muted">Enter something to identify the issue.</small>
+                        <small id="issueNameHelp" class="form-text text-muted" style="color: white;">Enter something to identify the issue.</small>
                     </div>
                     <div class="form-group">
-                            <label for="issueDescription">Description of issue</label>
+                            <label for="issueDescription" style="color: black;">Description of issue</label>
                             <input type="text" name="issueDescription" class="form-control" id="issueDescription" placeholder="Description" value="{{request.form.issueDescription}}">
-                            <small id="issueDescriptionHelp" class="form-text text-muted">Enter a breif description of the issue.</small>  
+                            <small id="issueDescriptionHelp" class="form-text text-muted" style="color: white;">Enter a breif description of the issue.</small>  
                     </div>
                     <br>
                     <label>Issue Severity</label>
@@ -63,21 +63,21 @@
                         <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="Minor" checked>
                         <label class="form-check-label" for="exampleRadios1">
                             Minor Issue
-                        <label class="text-muted"> - QOL issue, does not prevent work</label></label>
+                        <label class="text-muted"  style="color: white;"> - QOL issue, does not prevent work</label></label>
                    
                          
                     <div class="form-check form-check-inline">
                         <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="Major" checked>
                         <label class="form-check-label" for="exampleRadios1">
                             Major Issue
-                            <label class="text-muted"> - Important issue that could hinder future work if not fixed</label></label>           
+                            <label class="text-muted" style="color: white;"> - Important issue that could hinder future work if not fixed</label></label>           
                     </div>
         
                     <div class="form-check form-check-inline"></div>
                         <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="Critical" checked>
                         <label class="form-check-label" for="exampleRadios1">
                             Critical Issue (HTFPTISGDI)
-                        <label class="text-muted">- Work cannot be done until this issue is resolved</label></label>           
+                        <label class="text-muted" style="color: white;">- Work cannot be done until this issue is resolved</label></label>           
                     </div>
     
                     <br>
@@ -86,14 +86,14 @@
                         
                     
                     <div class="form-group">
-                            <label for="assignee">Issue assignee</label>
+                            <label for="assignee" style="color: black;">Issue assignee</label>
                             <input type="text" name="assignee" class="form-control" id="issueAssignee" placeholder="Jotaro Kujo" value="{{request.form.assignee}}">
-                            <small id="issueAssigneeHelp" class="form-text text-muted">Who will be working on this issue?</small>
+                            <small id="issueAssigneeHelp" class="form-text text-muted" style="color: white;">Who will be working on this issue?</small>
                     </div>
                     <div class="form-group">
-                            <label for="creater">Issue Submitter</label>
+                            <label for="creater" style="color: black;">Issue Submitter</label>
                             <input type="text" name="creator" class="form-control" id="issueCreator" placeholder="issue creator" value="{{request.form.creator}}">
-                            <small id="issueCreatorHelp" class="form-text text-muted">Who logged this issue?</small>
+                            <small id="issueCreatorHelp" class="form-text text-muted" style="color: white;">Who logged this issue?</small>
                     </div>
                        
                         <button id=submit name="create-issue" type="submit" class="btn btn-primary" value="add">Create issue</button>
