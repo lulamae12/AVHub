@@ -32,7 +32,10 @@
                 <a class="navbar-brand" href="#">AV Hub</a>
             </div>
                 <ul class="nav navbar-nav">
-                <li class="active"><a href="/home">Home</a></li>
+                    <li><a href="/home">Home</a></li>
+                    <li class="active"><a href="/issue-tracker">Issue Tracker</a></li>
+
+                    <li><a href="/track-hub">AV I Track Build Hub</a></li>
             </ul>
         </div>
     </nav>
@@ -43,9 +46,12 @@
         <div class="row">
             <div class="col-sm" style = "border:1px solid black">
                 
+                <h1 style="color: white">Create Issue</h1>
+                <hr style="color: white;">
+
                 <!-- create issue form-->
                 <form style="background-color: dimgray; border:15px solid dimgray" method="POST" action="/issue-tracker">
-                    <p style="font-size: 200%; color: black;">Create Issue</p>
+                   
                     <p style="color:red;">{{errorMessage}}</p>
                     <div class="form-group">
                         <label for="issueName" style="color: black;">Name of issue</label>
@@ -58,24 +64,24 @@
                             <small id="issueDescriptionHelp" class="form-text text-muted" style="color: white;">Enter a breif description of the issue.</small>  
                     </div>
                     <br>
-                    <label>Issue Severity</label>
+                    <label style="color: black">Issue Severity</label>
                     <div class="form-check form-check-inline">
                         <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="Minor" checked>
-                        <label class="form-check-label" for="exampleRadios1">
+                        <label class="form-check-label" for="exampleRadios1" style="color: black">
                             Minor Issue
                         <label class="text-muted"  style="color: white;"> - QOL issue, does not prevent work</label></label>
                    
                          
                     <div class="form-check form-check-inline">
                         <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="Major" checked>
-                        <label class="form-check-label" for="exampleRadios1">
+                        <label class="form-check-label" for="exampleRadios1" style="color: black">
                             Major Issue
                             <label class="text-muted" style="color: white;"> - Important issue that could hinder future work if not fixed</label></label>           
                     </div>
         
                     <div class="form-check form-check-inline"></div>
                         <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="Critical" checked>
-                        <label class="form-check-label" for="exampleRadios1">
+                        <label class="form-check-label" for="exampleRadios1" style="color: black">
                             Critical Issue (HTFPTISGDI)
                         <label class="text-muted" style="color: white;">- Work cannot be done until this issue is resolved</label></label>           
                     </div>
@@ -97,7 +103,6 @@
                     </div>
                        
                         <button id=submit name="create-issue" type="submit" class="btn btn-primary" value="add">Create issue</button>
-
                         
                         
                 </form>
@@ -116,7 +121,7 @@
                             <span><button type="submit" name="close-issue-button" value="close-issue" class="btn btn-primary"> Close issue</button></span>
                             </li>
                             <br>
-
+                            
                         </form>
                     {% endfor %}
                 </ul>

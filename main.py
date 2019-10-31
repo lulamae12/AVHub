@@ -55,7 +55,13 @@ def home():
     
     return render_template("home.html")
 
+@app.route("/track-hub")
+def trackHub():
+    return render_template("build-team-hub.html")
 
+@app.route("/annex-image")
+def annexImage():
+    return render_template("annex-picture.html")
 
 
 
