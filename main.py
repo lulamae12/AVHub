@@ -256,13 +256,16 @@ def chat():
     return render_template('chat.html')
 
 def messageReceived(methods=['GET', 'POST']):
-    print('message was received!!!')
+    print('message received')
 
 @socket.on('my event')
 def handle_my_custom_event(json, methods=['GET', 'POST']):
     print('received my event: ' + str(json))
     socket.emit('my response', json, callback=messageReceived)
-
+    chatLog = open("chatLog.txt","a+")
+    chatLog.write(str(json))
+    chatLog.write("\n")
+    chatLog.close()
 
 
 
