@@ -251,30 +251,17 @@ def addOrRemoveIssue():
 
 
     
-@app.route("/chat",methods=["GET","POST"])#chat
+@app.route('/chat')
 def chat():
-    
-    return render_template("chat.html",chatList=chatList)
+    return render_template('chat.html')
 
-
-
+def messageReceived(methods=['GET', 'POST']):
+    print('message was received!!!')
 
 @socket.on('my event')
-def handleCustomEvent(json,methods=['GET','POST']):
-
-   
-    if json["username"] == "" or json["message"] == "":
-        #print("invalid!")
-        
-        pass
-    else:
-        print("received event: " + str(json))
-        socket.emit("my response:",json)
-        name = json["username"]
-        mess = json["message"]
-        chatList.append("User: "+name +"\n\n"+mess)
-        socket.emit("my response:",json)
-    
+def handle_my_custom_event(json, methods=['GET', 'POST']):
+    print('received my event: ' + str(json))
+    socket.emit('my response', json, callback=messageReceived)
 
 
 
