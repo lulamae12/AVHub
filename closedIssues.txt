@@ -160,4 +160,10 @@ Description:nrishsd1111111
 Assigned To: sdasdasdsadasdasd2121212
 Date Created: 2019-10-30
 
-This issue was logged by: sadasdasdasdasdasdasdasdasdasd121212
+This issue was logged by: sadasdasdasdasdasdasdasdasdasd121212Issue Severity Level: Critical
+Name: Poor programmers
+Description:Our programming team is not the best, but I allow them to work on this out of pity
+Assigned To: Brent Greene
+Date Created: 2019-11-01
+
+This issue was logged by: Toby Ruth

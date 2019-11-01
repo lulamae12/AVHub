@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+   <head>
+       <!--Import materialize.css-->
+       <link rel= "stylesheet" type= "text/css" href="{{ url_for('static', filename='stylesheets/bootstrap.css') }}" />
+       <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+       <script type="text/javascript" src="{{ url_for('static', filename='js/openIssueList.js') }}"></script>
+       <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.min.js"></script>
+    
+    
+    
+    
+    
+    </script>
+
+
+
+
+       <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+      <title>Av Hub - Issue Tracker</title>
+   </head>	
+   
+   
+   
+    <body style="background-color:  #0e1010;">
+   
+   
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">AV Hub</a>
+            </div>
+                <ul class="nav navbar-nav">
+                    <li><a href="/home">Home</a></li>
+                    <li><a href="/issue-tracker">Issue Tracker</a></li>
+                    
+                    <li><a href="/track-hub">AV I Track Build Hub</a></li>
+                    <li class="active"><a href="/issue-tracker">Chat</a></li>
+            </ul>
+        </div>
+    </nav>
+    <br>
+    <h1 style="color: white;">Chat room</h1>
+    <hr style="color: white;">
+    
+    
+    <div class="container">
+        <div class="row">
+            <div class="col-sm" style = "border:1px solid black">
+                {% for item in chatList %}
+                    
+                    <ul class="message-list">    
+                        <li class="list-group-item list-group-item-action" style="color:black; white-space: pre-line; font-size: 120%;">{{ item }}</li>
+                        <br>
+                    </ul>   
+                {% endfor %}         
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sm" style = "border:1px solid black">
+                <h1 style="color: white">Create message</h1>
+                <form action="/chat" style="background-color: dimgray; border:15px solid dimgray" method="POST">
+                    <div class="form-group">
+                        <label for="Name" style="color: white;">Name   </label>
+                        <input type="text" class="username" placeholder="Username">
+                        
+                    </div>
+                    <div class="form-group">
+                        <label for="Message" style="color: white;">Message</label>
+                        <input type="text" class="message" placeholder="Message">
+                        
+                    </div>
+
+                        <button id="submit" name="create-comment" href="{{ url_for('chat') }}" type="submit" style="color: black"; class="btn btn-primary">Send Message</button>
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- chat script          connects socket to port and domain and then after user conencts and presses submit, it sets message and user to valeu and emits it back to the flask prog-->
+    <script> 
+        var socket = io.connect('http://' + document.domain + ':' + location.port);
+        socket.on('connect',function(){
+            socket.emit("my event",{
+                data: "User Connected"
+            })
+            var form = $('form').on( 'submit', function( e ) {
+                e.preventDefault()
+                let userName = $( 'input.username' ).val()
+                let userInput = $( 'input.message' ).val()
+                socket.emit( 'my event', {
+                    username : userName,
+                    message : userInput
+                })
+                $( 'input.message' ).val( '' ).focus()
+                
+            })
+        })
+        
+    
+    </script>
+
+
+
+    </body>
+   
+</html>

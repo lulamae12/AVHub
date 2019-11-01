@@ -1,6 +1,9 @@
 from flask import Flask,render_template,request, session, Blueprint, redirect, url_for, request
-import sys,datetime,json
+import sys,datetime
+import json as jsonLib
 import flask_login
+from flask_socketio import SocketIO
+
 from termcolor import colored
 from flask_basicauth import BasicAuth
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -14,12 +17,14 @@ app.config['BASIC_AUTH_PASSWORD'] = 'barbarossa'
 
 basic_auth = BasicAuth(app)
 
+socket = SocketIO(app)
 
 
 loggedIn = False
 
 openIssues = []
 closedIssues = []
+chatList = []
 
 @app.route("/authtest")
 
@@ -31,7 +36,7 @@ def secretVeiw():
 @app.route("/")
 def index():
     return render_template("home.html")
-        
+
 
 @app.route("/about")
 def about():
@@ -242,5 +247,49 @@ def addOrRemoveIssue():
     else:
         return updatePage()
 
+
+
+
+    
+@app.route("/chat",methods=["GET","POST"])#chat
+def chat():
+    
+    return render_template("chat.html",chatList=chatList)
+
+
+
+
+@socket.on('my event')
+def handleCustomEvent(json,methods=['GET','POST']):
+
+   
+    if json["username"] == "" or json["message"] == "":
+        #print("invalid!")
+        
+        pass
+    else:
+        print("received event: " + str(json))
+        socket.emit("my response:",json)
+        name = json["username"]
+        mess = json["message"]
+        chatList.append("User: "+name +"\n\n"+mess)
+        socket.emit("my response:",json)
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 if __name__ == "__main__":
+    
     app.run(debug=True)

@@ -8,3 +8,4 @@
 {'IssueSeverityLevel': 'Critical', 'Name': 'vesc ded s', 'Description': 'vx', 'AssignedTo': 'sas', 'DateCreated': '2019-10-31', 'Creator': 'mackwwws'}
 {'IssueSeverityLevel': 'Critical', 'Name': 'vesc ded s', 'Description': 'vx', 'AssignedTo': 'sas', 'DateCreated': '2019-10-31', 'Creator': 'mackwwws'}
 {'IssueSeverityLevel': 'Critical', 'Name': 'vesc ded s', 'Description': 'vx', 'AssignedTo': 'sas', 'DateCreated': '2019-10-31', 'Creator': 'mackwwws'}
+{'IssueSeverityLevel': 'Critical', 'Name': 'Poor programmers', 'Description': 'Our programming team is not the best, but I allow them to work on this out of pity', 'AssignedTo': 'Brent Greene', 'DateCreated': '2019-11-01', 'Creator': 'Toby Ruth'}
