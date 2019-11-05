@@ -87,6 +87,7 @@
             e.preventDefault()
             let user_name = $( 'input.username' ).val()
             let user_input = $( 'input.message' ).val()
+            let time = new Date($.now());
             socket.emit( 'my event', {
               user_name : user_name,
               message : user_input
@@ -98,9 +99,17 @@
           console.log( msg )
           if( typeof msg.user_name !== 'undefined' ) {
             $( 'h3' ).remove()
-            $( 'div.message_holder' ).append( '<div><b style="color: #fff"><hr> USER: '+msg.user_name+' <br><br> </b> '+msg.message+'<hr></div>' )
+            $( 'div.message_holder' ).append( '<div><b style="color: #fff"><hr> USER: '+msg.user_name+' <br><br> </b> '+msg.message+'<br><br><p style ="color: #696969; font-size:80%">'+msg.ID+'</p><hr></div>' )
           }
         })
+        socket.on( 'load', function( msg ) {
+          console.log( msg )
+          if( typeof msg.user_name !== 'undefined' ) {
+            $( 'h3' ).remove()
+            $( 'div.message_holder' ).append( '<div><b style="color: #fff"><hr> USER: '+msg.user_name+' <br><br> </b> '+msg.message+'<br><br><p style ="color: #696969; font-size:80%">'+msg.ID+'</p><hr></div>' )
+          }
+        })
+
       </script>
   
 

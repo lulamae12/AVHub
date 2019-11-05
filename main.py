@@ -1,6 +1,7 @@
 from flask import Flask,render_template,request, session, Blueprint, redirect, url_for, request
 import sys,datetime
-import json as jsonLib
+import json
+
 import flask_login
 from flask_socketio import SocketIO
 
@@ -14,6 +15,7 @@ app = Flask(__name__)
 app.config['BASIC_AUTH_FORCE'] = True
 app.config['BASIC_AUTH_USERNAME'] = 'avhub'
 app.config['BASIC_AUTH_PASSWORD'] = 'barbarossa'
+app.config['ENV'] = True
 
 basic_auth = BasicAuth(app)
 
@@ -27,7 +29,6 @@ closedIssues = []
 chatList = []
 
 @app.route("/authtest")
-
 def secretVeiw():
     return render_template("issue-tracker.html")
 
@@ -219,7 +220,7 @@ def addOrRemoveIssue():
             closedIssuesFile.write(closedIssues[item])
         
         
-        
+        openIssue =
 
 
 
@@ -253,6 +254,7 @@ def addOrRemoveIssue():
     
 @app.route('/chat')
 def chat():
+    
     return render_template('chat.html')
 
 def messageReceived(methods=['GET', 'POST']):
@@ -261,11 +263,25 @@ def messageReceived(methods=['GET', 'POST']):
 @socket.on('my event')
 def handle_my_custom_event(json, methods=['GET', 'POST']):
     print('received my event: ' + str(json))
+    timeID = datetime.datetime.now()
+
+    timeID= str(timeID).split(".", 1)[0]
+    
+    json["ID"] = str(timeID) 
+    print(json)
     socket.emit('my response', json, callback=messageReceived)
     chatLog = open("chatLog.txt","a+")
     chatLog.write(str(json))
     chatLog.write("\n")
     chatLog.close()
+
+    log = open("chatLog.txt","r")
+    for line in log.readlines:
+        print('emitted')
+        if "User Connected" not in line:
+            socket.emit('my response', line, callback=messageReceived)
+    log.close()
+
 
 
 
