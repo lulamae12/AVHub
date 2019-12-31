@@ -218,9 +218,9 @@ def addOrRemoveIssue():
         closedIssuesFile = open("closedIssues.txt","a+")
         for item in range(len(closedIssues)):
             closedIssuesFile.write(closedIssues[item])
+
         
-        
-        openIssue =
+        print(closedIssues)
 
 
 
