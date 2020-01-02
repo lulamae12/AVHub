@@ -197,7 +197,6 @@ tts-watson==1.0.0
 twitch-dl==1.4.0
 typed-ast==1.4.0
 Unidecode==1.1.1
-UNKNOWN==2.0.3
 update-checker==0.16
 uritemplate==3.0.0
 urllib3==1.24.1
