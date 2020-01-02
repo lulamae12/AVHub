@@ -355,4 +355,4 @@ def handle_my_custom_event(json, methods=['GET', 'POST']):#chat
 
 if __name__ == "__main__":
     
-    app.run(debug=True)
+    app.run(debug=True,host="192.168.86.88",port=5010)
