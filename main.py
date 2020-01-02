@@ -12,6 +12,10 @@ from LOGININFO import *
 
 #https://devcenter.heroku.com/articles/getting-started-with-python#set-up
 
+#git add .
+#git commit -m "first commit"
+#git push heroku master
+
 app = Flask(__name__)
 app.config['BASIC_AUTH_FORCE'] = True
 app.config['BASIC_AUTH_USERNAME'] = userName
