@@ -214,5 +214,4 @@ wolframalpha==3.0.1
 wrapt==1.10.11
 wxPython==4.0.4
 xmltodict==0.11.0
-youtube-dl==2018.9.26
-youtube-upload==0.8.0
+
