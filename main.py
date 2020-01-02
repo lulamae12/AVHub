@@ -10,6 +10,7 @@ from flask_basicauth import BasicAuth
 from werkzeug.security import generate_password_hash, check_password_hash
 from LOGININFO import *
 
+#https://devcenter.heroku.com/articles/getting-started-with-python#set-up
 
 app = Flask(__name__)
 app.config['BASIC_AUTH_FORCE'] = True
