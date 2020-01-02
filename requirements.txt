@@ -130,7 +130,7 @@ netaddr==0.7.19
 netifaces==0.10.9
 networkx==2.1
 nltk==3.2.5
-notebook==5.4.0
+notebook==5.7.8
 np-utils==0.5.12.1
 numpy==1.14.1
 oauth2client==4.1.3
