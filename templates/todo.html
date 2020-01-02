@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+   <head>
+       <!--Import materialize.css-->
+       <link rel= "stylesheet" type= "text/css" href="{{ url_for('static', filename='stylesheets/bootstrap.css') }}" />
+       <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+       <script type="text/javascript" src="{{ url_for('static', filename='js/openIssueList.js') }}"></script>
+    
+    
+    
+    
+    
+    
+    </script>
+
+
+
+
+       <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+      <title>Av Hub - Issue Tracker</title>
+   </head>	
+   
+   
+   
+    <body style="background-color:  #0e1010;">
+   
+   
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">AV Hub</a>
+            </div>
+                <ul class="nav navbar-nav">
+                    <li><a href="/home">Home</a></li>
+                    <li class="active"><a href="/issue-tracker">Issue Tracker</a></li>
+
+                    <li><a href="/track-hub">AV I Track Build Hub</a></li>
+                    <li><a href="/chat">Chat</a></li>
+                    <li><a href="/print-hub">3D Printer Hub</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sm" style = "border:1px solid black">
+                
+                <h1 style="color: white">Create New ToDo Item</h1>
+                <hr style="color: white;">
+
+                <!-- create issue form-->
+                <form style="background-color: dimgray; border:15px solid dimgray" method="POST" action="/issue-tracker">
+                   
+                    <p style="color:red;">{{errorMessage}}</p>
+                    <div class="form-group">
+                        <label for="issueName" style="color: black;">Name</label>
+                        <input type="text" name="issueName" class="form-control" id="issueName" placeholder="Name" value="{{request.form.issueName}}">
+                        <small id="issueNameHelp" class="form-text text-muted" style="color: white;">Enter the Name.</small>
+                    </div>
+                    <div class="form-group">
+                            <label for="issueDescription" style="color: black;">Description of thing that needs to be done</label>
+                            <input type="text" name="issueDescription" class="form-control" id="issueDescription" placeholder="Description" value="{{request.form.issueDescription}}">
+                            <small id="issueDescriptionHelp" class="form-text text-muted" style="color: white;">Enter a breif description.</small>  
+                    </div>
+                    
+                    <div class="form-group">
+                            <label for="creater" style="color: black;">Submitter</label>
+                            <input type="text" name="creator" class="form-control" id="issueCreator" placeholder="issue creator" value="{{request.form.creator}}">
+                            <small id="issueCreatorHelp" class="form-text text-muted" style="color: white;">Who logged this item?</small>
+                    </div>
+                       
+                        <button id=submit name="create-issue" type="submit" class="btn btn-primary" value="add">Create New To Do item</button>
+                        
+                        
+                </form>
+            </div>
+            <br>
+            <h1 style="color: white;">TODO</h1>
+            <hr>
+            <div>
+
+                <ul class="list-group"> 
+                    {% for issue in issueList  %}
+                        <form action="/issue-tracker" method="POST">
+                           
+                            <li class="list-group-item list-group-item-action" id="issueVal" style="white-space: pre-line; font-size: 120%;">{{issue}}<span class="badge badge-primary badge-pill" style="background-color: red; float: top;">OPEN</span>
+                            <input type="hidden" name="openIssueListItem"  id="openIssueListItemID"  style="white-space: pre-line;" value="{{issue}}">
+                            <span><button type="submit" name="close-issue-button" value="close-issue" class="btn btn-primary"> Close issue</button></span>
+                            </li>
+                            <br>
+                            
+                        </form>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <br>
+            
+                    
+
+        </div>
+    </div>
+    
+  
+    </body>
+   
+</html>

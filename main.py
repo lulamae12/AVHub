@@ -8,13 +8,13 @@ from flask_socketio import SocketIO
 from termcolor import colored
 from flask_basicauth import BasicAuth
 from werkzeug.security import generate_password_hash, check_password_hash
-
+from LOGININFO import *
 
 
 app = Flask(__name__)
 app.config['BASIC_AUTH_FORCE'] = True
-app.config['BASIC_AUTH_USERNAME'] = 'avhub'
-app.config['BASIC_AUTH_PASSWORD'] = 'barbarossa'
+app.config['BASIC_AUTH_USERNAME'] = userName
+app.config['BASIC_AUTH_PASSWORD'] = password
 app.config['ENV'] = True
 
 basic_auth = BasicAuth(app)
@@ -65,6 +65,12 @@ def home():
 def trackHub():
     return render_template("build-team-hub.html")
 
+@app.route("/print-hub")
+def printHub():
+    return render_template("3dp-hub.html")
+
+
+
 @app.route("/annex-image")
 def annexImage():
     return render_template("annex-picture.html")
@@ -93,10 +99,20 @@ def addOrRemoveIssue():
 
 
             issueFormat = "Issue Severity Level: " + severityButton + "\n" + "Name: "+ issueName + "\n" + "Description:" + issueDescription +"\n"+ "Assigned To: " + assignee + "\n"+ "Date Created: " +date + "\n\n" + "This issue was logged by: " + creator
-            
+
             if issueFormat not in openIssues:
 
                 openIssues.append(issueFormat)
+        
+        
+        closeCount = len(open("closedIssues.txt").readlines())
+        closedIssuesFile = open("closedIssues.txt","r")
+        closedIssuesLines =closedIssuesFile.readlines
+        print(closeCount)
+        print(closedIssues)
+        print(openIssues)
+        
+    
         return render_template("issue-tracker.html",issueList=openIssues,closeIssueList=closedIssues)
 
     def addIssue():
@@ -152,7 +168,7 @@ def addOrRemoveIssue():
             creator = issueData["Creator"]
 
 
-            issueFormat = "Issue Severity Level: " + severityButton + "\n" + "Name: "+ issueName + "\n" + "Description:" + issueDescription +"\n"+ "Assigned To: " + assignee + "\n"+ "Date Created: " +date + "\n\n" + "This issue was logged by: " + creator
+            issueFormat = "Issue Severity Level: " + severityButton + "\n" + "Name: "+ issueName + "\n" + "Description:" + issueDescription +"\n"+ "Assigned To: " + assignee + "\n"+ "Date Created: " +date + "\n\n" + "This issue was logged by: " + creator 
             
 
 
@@ -178,7 +194,42 @@ def addOrRemoveIssue():
     def closeIssue():
         
         currentIssue = request.form.get("openIssueListItem")
-        
+        #print("\ncurreis ",currentIssue)
+
+        openIssueFile =  open("currentIssues.txt","r")
+        linen = 0
+        for line in openIssueFile.readlines():
+            
+            line = line.replace("'","\"")
+            issueData = json.loads(line)
+            issueName = issueData["Name"]
+            issueDescription = issueData["Description"]
+            date = issueData["DateCreated"]
+            print(issueName,issueDescription,date)
+
+            if issueName in currentIssue and issueDescription in currentIssue and date in currentIssue:
+                print("\nmatch! !!!!!!~!!!!!!!\n")
+                print("line:",linen)
+                lineToDelete = line
+            linen = linen + 1
+
+        with open("currentIssues.txt", "r") as f:
+            lines = f.readlines()
+        with open("currentIssues.txt", "w") as f:
+            for line in lines:
+                print("-------")
+                print(line)
+                print(lineToDelete)
+                print("-------")
+                print(line == lineToDelete)
+                if line.replace("\n","").replace("'","\"") != lineToDelete.replace("\n","").replace("'","\""):
+                    print("rewrpte")
+                    f.write(line)
+                else:
+                    print("deleted")
+
+
+
         currentIssue = currentIssue.encode("ascii").decode("utf-8")
         currentIssue = currentIssue.replace("\r","")
         currentIssueLis = []
@@ -218,6 +269,7 @@ def addOrRemoveIssue():
         closedIssuesFile = open("closedIssues.txt","a+")
         for item in range(len(closedIssues)):
             closedIssuesFile.write(closedIssues[item])
+            closedIssuesFile.write("\n\n")
 
         
         print(closedIssues)
@@ -261,7 +313,7 @@ def messageReceived(methods=['GET', 'POST']):
     print('message received')
 
 @socket.on('my event')
-def handle_my_custom_event(json, methods=['GET', 'POST']):
+def handle_my_custom_event(json, methods=['GET', 'POST']):#chat
     print('received my event: ' + str(json))
     timeID = datetime.datetime.now()
 
@@ -276,7 +328,7 @@ def handle_my_custom_event(json, methods=['GET', 'POST']):
     chatLog.close()
 
     log = open("chatLog.txt","r")
-    for line in log.readlines:
+    for line in log.readlines():
         print('emitted')
         if "User Connected" not in line:
             socket.emit('my response', line, callback=messageReceived)
@@ -285,7 +337,7 @@ def handle_my_custom_event(json, methods=['GET', 'POST']):
 
 
 
-
+#remove gevenet, thanks china forum
 
 
 
