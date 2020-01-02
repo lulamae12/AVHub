@@ -152,7 +152,7 @@ def addOrRemoveIssue():
                     "Creator":creator
                     }
         openIssueFile =  open("currentIssues.txt","a+")
-    
+        #test
 
         openIssueFile.write(str(jsonDataToWrite))
         openIssueFile.write("\n")
