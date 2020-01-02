@@ -1,1 +1,1 @@
-web: gunicorn app:avhub
+web: gunicorn app:app
